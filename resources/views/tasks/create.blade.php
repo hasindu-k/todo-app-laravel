@@ -1,31 +1,44 @@
-<!-- resources/views/tasks/create.blade.php -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Create Task</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     @vite('resources/css/app.css')
 </head>
-<body>
-<h1>Create Task</h1>
-<form action="{{ route('tasks.store') }}" method="POST">
-    @csrf
-    <label for="title">Title:</label>
-    <input type="text" name="title" id="title" placeholder="add a title ...">
-    <label for="description">Description:</label>
-    <textarea name="description" id="description" placeholder="add a description ..."></textarea>
-    <label for="completed">Completed:</label>
-    <input type="checkbox" name="completed" id="completed"><br><br>
-    <label for="tags">Tags:</label>
-    <div id="tags"  style="display: grid; grid-template-columns: 10% 10% 10% 10%;" >
-        @foreach ($tags as $tag)
-            <div>
-                <label for="tag{{ $tag->id }}">{{ $tag->name }}</label>
-                <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}">
-            </div>
-        @endforeach
+<body class="bg-yellow-50 flex items-center justify-center pt-20">
+<div class="w-4/5 mx-auto border-2 p-8 rounded-lg bg-white shadow-lg">
+    <div class="flex justify-between items-center pb-5">
+        <h1 class="font-bold text-3xl">Create Task</h1>
     </div>
-    <button type="submit" class="btn bg-blue-500 hover:bg-blue-600">Create</button>
-</form>
+    <form action="{{ route('tasks.store') }}" method="POST">
+        @csrf
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
+            <input type="text" name="title" id="title" placeholder="Add a title ..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 font-bold mb-2">Description:</label>
+            <textarea name="description" id="description" placeholder="Add a description ..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="completed" class="block text-gray-700 font-bold mb-2">Completed:</label>
+            <input type="checkbox" name="completed" id="completed" value="1" class="mr-2 leading-tight">
+            <span class="text-gray-700">Yes</span>
+        </div>
+        <div class="mb-4">
+            <label for="tags" class="block text-gray-700 font-bold mb-2">Tags:</label>
+            <div id="tags" class="grid grid-cols-4 gap-4">
+                @foreach ($tags as $tag)
+                    <div class="flex items-center">
+                        <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}" class="mr-2 leading-tight">
+                        <label for="tag{{ $tag->id }}" class="text-gray-700">{{ $tag->name }}</label>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <button type="submit" class="btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+        <a href="{{route('tasks.index')}}"><button type="button" class="btn bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancel</button></a>
+    </form>
+</div>
 </body>
 </html>

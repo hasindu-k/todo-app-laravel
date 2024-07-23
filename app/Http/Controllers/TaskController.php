@@ -29,7 +29,11 @@ class TaskController extends Controller
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'completed' => 'nullable|boolean'
         ]);
+
+        // If 'completed' is not present in the request, set it to 0
+        $data['completed'] = $request->has('completed') ? 1 : 0;
 
         $Task = Task::create($data);
         $Task->tags()->attach($request->tags);
@@ -50,6 +54,10 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'required',
         ]);
+
+        // If 'completed' is not present in the request, set it to 0
+        $data['completed'] = $request->has('completed') ? 1 : 0;
+
         $task->update($data);
         $task->tags()->sync($request->tags);
         return redirect()->route('tasks.index');
