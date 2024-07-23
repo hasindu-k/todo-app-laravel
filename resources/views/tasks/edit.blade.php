@@ -4,6 +4,7 @@
 <head>
     <title>Edit Task</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite('resources/css/app.css')
 
 </head>
 <body>
@@ -21,13 +22,15 @@
     <input type="checkbox" name="completed" id="completed" {{ $task->completed ? 'checked' : '' }}>
 
     <label for="tags">Tags:</label>
-    <select name="tags[]" id="tags" multiple>
+    <div id="tags">
         @foreach ($tags as $tag)
-            <option value="{{ $tag->id }}" {{ in_array($tag->id, $task->tags->pluck('id')->toArray()) ? 'selected' : '' }}>
-                {{ $tag->name }}
-            </option>
+            <div>
+                <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}"
+                       @if($task->tags->contains($tag->id)) checked @endif>
+                <label for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+            </div>
         @endforeach
-    </select>
+    </div>
 
     <button type="submit">Update</button>
 </form>

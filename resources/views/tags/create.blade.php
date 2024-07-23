@@ -4,6 +4,7 @@
 <head>
     <title>Create Tag</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite('resources/css/app.css')
 </head>
 <body>
 <h1>Create Tag</h1>

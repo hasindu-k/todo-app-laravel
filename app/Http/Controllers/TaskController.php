@@ -12,7 +12,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::with('tags')->get();
-        return view('tasks.index', compact('tasks'));
+        $tags = Tag::all();
+        return view('tasks.index', compact('tasks','tags'));
     }
 
     // Show the form for creating a new task

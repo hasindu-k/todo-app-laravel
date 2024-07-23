@@ -4,6 +4,7 @@
 <head>
     <title>Edit Tag</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @vite('resources/css/app.css')
 
 </head>
 <body>
