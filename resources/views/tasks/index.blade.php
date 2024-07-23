@@ -24,6 +24,28 @@
                 hideTagsCheckbox.checked = false;
             });
         });
+        function toggleDropdown(event, dropdownId) {
+            event.stopPropagation(); // Prevent click event from closing the dropdown
+
+            const allDropdowns = document.querySelectorAll('[id^="dropdownMenu"]');
+            allDropdowns.forEach(dropdown => {
+                if (dropdown.id !== dropdownId) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', function(event) {
+            const allDropdowns = document.querySelectorAll('[id^="dropdownMenu"]');
+            allDropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target) && !event.target.matches('[alt="Menu button"]')) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });
     </script>
 </head>
 <body class="bg-red-50 min-h-screen">
@@ -32,7 +54,7 @@
     <div class="flex padding-8 place-content-between place-items-center pt-10 pb-5 px-16">
         <h1 class="font-bold text-3xl">Tasks</h1>
         <a href="{{ route('tasks.create') }}">
-            <img src="{{asset('img/add-circle.svg')}}" alt="task add button" class="size-10">
+            <img src="{{asset('img/add.svg')}}" alt="task add button" class="size-8">
         </a>
     </div>
     {{--    end of top row with button and heading--}}
@@ -53,7 +75,7 @@
                         <span class="text-xs text-white">+</span>
                     </div>
                 </a>
-                <div class="ml-5">Add More Tag</div>
+                <div class="ml-5 font-semibold">Add More Tag</div>
             </div>
             <div class="flex items-center p-6">
                 <input class="ml-3 " type="checkbox" name="hide-tags" value="1" id="hide-tags-checkbox">
@@ -69,39 +91,41 @@
         <div id="task-container" class="basis-3/4 flex flex-wrap gap-4 p-5">
             @foreach ($tasks as $task)
                     <div class="card basis-1/2 max-w-[calc(50%-1rem)] bg-yellow-200 mb-5 flex flex-col p-5 shadow hover:shadow-2xl">
-                        <h3 class="font-bold">{{ $task->title }}</h3><br>
+                        <div class="flex place-content-between">
+                            <h3 class="font-bold">{{ $task->title }}</h3>
+                            <div class="relative">
+                                <!-- Menu Button -->
+                                <img src="{{asset('img/menu.svg')}}" alt="Menu button" class="size-8 cursor-pointer" onclick="toggleDropdown(event, 'dropdownMenu{{ $task->id }}')">
+
+                                <!-- Dropdown Menu -->
+                                <div id="dropdownMenu{{ $task->id }}" class="absolute hidden right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                    <a href="{{ route('tasks.edit', $task->id) }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Edit</a>
+                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full text-left">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         {{$task->description}} <br><br>
 {{--                                Tags:--}}
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-2 relative">
                             @forelse ($task->tags as $tag)
                                 <div class="circle mb-2" style="background-color: {{ $tag->color }}" aria-label="{{ $tag->name }}" ></div>
                             @empty
                             @endforelse
-                        </div>
-                        <div class="pt-2">
-                            <a href="{{ route('tasks.edit', $task->id) }}">
-                                <button type="button"
-                                        class="btn mr-2 bg-blue-500 hover:bg-blue-600">
-                                    Edit
-                                </button>
-                            </a>
-                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
-                                  style="display:inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="btn bg-red-500 hover:bg-red-600">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                        <div class="mt-4">
-                            <input type="checkbox" name="completed"
-                                   @if($task->completed)
-                                       checked
-                                   @endif
-                                   value="1" disabled>
-                            <label for="completed">Done</label>
+                                <div class="mt-4 absolute right-0">
+                                    <a href="{{ route('tasks.edit', $task->id) }}">
+                                    <input type="checkbox" name="completed" class="cursor-pointer"
+                                           @if($task->completed)
+                                               checked
+                                           @endif
+                                           value="1" disabled>
+                                    <label for="completed" class="cursor-pointer">Done</label>
+                                    </a>
+                                </div>
                         </div>
                     </div>
             @endforeach
