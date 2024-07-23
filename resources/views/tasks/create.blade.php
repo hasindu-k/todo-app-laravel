@@ -19,13 +19,13 @@
     <label for="tags">Tags:</label>
     <div id="tags"  style="display: grid; grid-template-columns: 10% 10% 10% 10%;" >
         @foreach ($tags as $tag)
-            <div style="display: flex; justify-content: center; align-content: center">
+            <div>
                 <label for="tag{{ $tag->id }}">{{ $tag->name }}</label>
                 <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}">
             </div>
         @endforeach
     </div>
-    <button type="submit">Create</button>
+    <button type="submit" class="btn bg-blue-500 hover:bg-blue-600">Create</button>
 </form>
 </body>
 </html>

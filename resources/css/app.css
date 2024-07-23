@@ -10,9 +10,10 @@
         box-shadow: theme('boxShadow.xl');
     }
     /* ... */
-    /*.btn {*/
-    /*    color: theme('colors.white');*/
-    /*    background-color: theme('blue-600');*/
-    /*    text-white bg-blue-500 hover:bg-blue-600 rounded-lg px-5 py-2 mr-2*/
-    /*}*/
+    .btn {
+        @apply text-white rounded-lg px-5 py-2;
+    }
+    .circle {
+        @apply h-12 w-12 rounded-full bg-amber-50;
+    }
 }

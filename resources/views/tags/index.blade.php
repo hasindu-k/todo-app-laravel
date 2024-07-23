@@ -11,7 +11,9 @@
 <a href="{{ route('tags.create') }}">Create Tag</a>
 <ul>
     @foreach ($tags as $tag)
-        <li>{{ $tag->name }}
+        <li>
+            <h3>{{ $tag->name }}</h3>
+            <div class="circle" style="background-color: {{$tag -> color}}"></div>
             <a href="{{ route('tags.edit', $tag->id) }}">Edit</a>
             <form action="{{ route('tags.destroy', $tag->id) }}" method="POST" style="display:inline">
                 @csrf

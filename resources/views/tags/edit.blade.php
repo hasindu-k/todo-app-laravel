@@ -14,7 +14,8 @@
     @method('PUT')
     <label for="name">Name:</label>
     <input type="text" name="name" id="name" value="{{ $tag->name }}">
-
+    <label for="color">Color:</label>
+    <input type="color" name="color" id="color" value="{{ $tag->color }}">
     <button type="submit">Update</button>
 </form>
 </body>
