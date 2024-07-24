@@ -88,7 +88,7 @@
         {{--   end-container for tags--}}
 
         {{--   start-container for tasks--}}
-        <div id="task-container" class="basis-3/4 flex flex-wrap gap-4 p-5">
+        <div id="task-container" class="basis-3/4 flex flex-wrap items-start gap-4 p-5">
             @foreach ($tasks as $task)
                     <div class="card basis-1/2 max-w-[calc(50%-1rem)] bg-yellow-200 mb-5 flex flex-col p-5 shadow hover:shadow-2xl">
                         <div class="flex place-content-between">
