@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//Route::get('/product',[ProductController::class,'index'])->name('product.index');
+//Route::get('/', function () {
+//    return view('tasks.index');
+//});
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[\App\Http\Controllers\TaskController::class,'index'])->name('tasks.index');
 
 Route::resource('tasks', \App\Http\Controllers\TaskController::class);
 Route::resource('tags', \App\Http\Controllers\TagController::class);

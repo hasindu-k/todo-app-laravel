@@ -72,7 +72,7 @@
             <div class="flex items-center p-5">
                 <a href="{{ route('tags.index') }}">
                     <div class="circle flex items-center justify-center" style="background-color: #cccccc; cursor: pointer;">
-                        <span class="text-xs text-white">+</span>
+                        <span class="text-3xl text-white ">+</span>
                     </div>
                 </a>
                 <div class="ml-5 font-semibold">Add More Tag</div>
